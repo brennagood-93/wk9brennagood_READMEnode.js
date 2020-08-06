@@ -18,8 +18,9 @@ function generateMarkdown(data) {
   ## License: ${data.License}
   ## Contributing: ${data.Contributing}
   ## Tests: ${data.Tests}
-  ## Questions: ${data.Email}
-                ${data.Github}
+  ## Questions
+  Email: ${data.Email}
+  Github: ${data.Github}
 
 `;
 }
