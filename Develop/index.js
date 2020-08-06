@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const markdown = require('./utils/generateMarkdown');
+const generateMarkdown = require('./utils/generateMarkdown');
 
 // array of questions for user
 const questions = [{
@@ -41,43 +41,40 @@ const questions = [{
 },
 {
     type: "input",
-    name: "Questions",
-    message: "Direct questions to brenna.elise.good@gmail.com"
+    name: "Email",
+    message: "What is your email address?"
+},
+{
+    type: "input",
+    name: "Github",
+    message: "What is your Github username?"
 }];
 
-
-inquirer
-    .prompt(
-        /* Pass your questions in here */
-        questions
-    )
-    .then(answers => {
-        // Use user feedback for... whatever!!
-        const data = markdown(answers);
-        writeToFile("README.md", data);
-        console.log(answers);
-    })
-    .catch(error => {
-        if (error.isTtyError) {
-            // Prompt couldn't be rendered in the current environment
-        } else {
-            // Something else when wrong
-        }
-    });
 
 // function to write README file
 function writeToFile(fileName, data) {
 
     fs.writeFile(fileName, data, "UTF-8", function (error) {
         if (error) {
-            console.log(error)
+            console.log(error);
         }
-        console.log("success")
+        else {
+        console.log("success");}
     })
 }
 
 // function to initialize program
 function init() {
+  inquirer
+  .prompt(questions)  
+  .then((answers) => {
+     console.log(answers);
+     const readMeText = generateMarkdown(answers);
+     writeToFile("README.md", readMeText);
+  })
+  .catch((error) => {
+      console.log(error)
+  })
 
 }
 
